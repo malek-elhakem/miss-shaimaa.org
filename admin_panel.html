@@ -1,79 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
 <title>Admin Panel</title>
 <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<header>
-<h1>Admin Panel</h1>
-</header>
+<header><h1>Admin Panel</h1></header>
 
 <section class="container">
 
 <div class="card">
-
 <h2>Upload Exams</h2>
-
 <form id="examForm">
-
-<label>Governorate</label>
-<select required>
-<option value="">Select Governorate</option>
-<option>القاهرة</option>
-<option>الجيزة</option>
-<option>الإسكندرية</option>
-<option>الدقهلية</option>
-<option>البحر الأحمر</option>
-<option>البحيرة</option>
-<option>الفيوم</option>
-<option>الغربية</option>
-<option>الإسماعيلية</option>
-<option>المنوفية</option>
-<option>المنيا</option>
-<option>القليوبية</option>
-<option>الوادي الجديد</option>
-<option>السويس</option>
-<option>أسوان</option>
-<option>أسيوط</option>
-<option>بني سويف</option>
-<option>بورسعيد</option>
-<option>دمياط</option>
-<option>الشرقية</option>
-<option>جنوب سيناء</option>
-<option>كفر الشيخ</option>
-<option>مطروح</option>
-<option>الأقصر</option>
-<option>قنا</option>
-<option>شمال سيناء</option>
-<option>سوهاج</option>
-</select>
-<br>
-
 <label>Grade</label>
-<select required>
+<select id="examGrade" required>
 <option value="">Select Grade</option>
-<option>Prep 1</option>
-<option>Prep 2</option>
-<option>Prep 3</option>
-<option>Sec 1</option>
-<option>Sec 2</option>
-<option>Sec 3</option>
-</select>
-<br>
-
+<option>1 Preparatory</option>
+<option>2 Preparatory</option>
+<option>3 Preparatory</option>
+<option>1 Secondary</option>
+</select><br>
+<label>Year</label>
+<input type="text" id="examYear" placeholder="e.g. 2025" required><br>
+<label>Exam Name</label>
+<input type="text" id="examName" placeholder="e.g. Arabic" required><br>
 <label>Upload Exam (PDF)</label>
-<input type="file" accept=".pdf" required>
-<br>
-
+<input type="file" id="examFile" accept=".pdf" required><br>
 <button type="submit">Upload Exam</button>
-
 </form>
+</div>
 
+<div class="card">
+<h2>Search Students</h2>
+<input type="text" id="searchInput" placeholder="Enter student number or name">
+<table border="1" style="width:100%;color:white;">
+  <thead>
+    <tr>
+      <th>Number</th>
+      <th>Name</th>
+      <th>Grade</th>
+      <th>Mandatory Exam</th>
+      <th>Arabic</th>
+      <th>Other Exams</th>
+    </tr>
+  </thead>
+  <tbody id="studentsTableBody"></tbody>
+</table>
 </div>
 
 </section>
@@ -83,10 +57,36 @@
 </footer>
 
 <script>
+// Load students
+let allStudents = JSON.parse(localStorage.getItem('studentsData')) || [];
+
+function renderTable(filter=""){
+    const tbody = document.getElementById('studentsTableBody');
+    tbody.innerHTML = "";
+    allStudents.forEach(s => {
+        if(filter && !s.number.includes(filter) && !s.name.toLowerCase().includes(filter.toLowerCase())) return;
+        const row = `<tr>
+            <td>${s.number}</td>
+            <td>${s.name}</td>
+            <td>${s.grade}</td>
+            <td>${s.exams?.Mandatory?.score ?? 'Not Taken'}</td>
+            <td>${s.exams?.Arabic?.score ?? 'Not Taken'}</td>
+            <td>${JSON.stringify(s.exams)}</td>
+        </tr>`;
+        tbody.innerHTML += row;
+    });
+}
+renderTable();
+
+// Search students
+document.getElementById('searchInput').addEventListener('input', function(){
+    renderTable(this.value);
+});
+
+// Upload exam (dummy, just alert)
 document.getElementById('examForm').addEventListener('submit', function(e){
     e.preventDefault();
     alert("Exam uploaded successfully!");
-    // هنا ممكن تضيف كود رفع الملفات على السيرفر
 });
 </script>
 
