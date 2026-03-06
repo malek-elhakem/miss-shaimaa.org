@@ -1,44 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
-<title>Shaimaa El-Desouky Arabic Platform</title>
+<title>Shaimaa Platform</title>
 <link rel="stylesheet" href="style.css">
+<style>
+body { font-family: Arial; background:#1e1e1e; color:white; margin:0; }
+.container { width: 90%; max-width:600px; margin: 20px auto; }
+.card { background:#2c2c2c; padding:20px; margin-bottom:15px; border-radius:10px; }
+button { padding:10px 20px; margin:5px; cursor:pointer; }
+</style>
 </head>
-
 <body>
 
-<header>
+<header><h1>Shaimaa Platform</h1></header>
 
-<h1>Shaimaa El-Desouky Platform</h1>
+<section class="container">
 
-<nav>
-<a href="index.html">Home</a>
-<a href="login.html">Login</a>
-<a href="register.html">Register</a>
-<a href="governorates.html">Governorate Exams</a>
-<a href="exams.html">Exams</a>
-<a href="contact.html">Contact Us</a>
-</nav>
+<div class="card">
+<h2>Tasks / Files</h2>
+<ul id="tasksList">
+  <li>Exam 1 – 1 Preparatory – 2025</li>
+  <li>Exam 2 – 2 Preparatory – 2025</li>
+  <li>Exam 3 – 3 Preparatory – 2025</li>
+  <li>Exam 4 – 1 Secondary – 2025</li>
+  <!-- كل الملفات الأخرى تظهر هنا بشكل طولي -->
+</ul>
+</div>
 
-</header>
+<div class="card">
+<h2>User Actions</h2>
+<button onclick="location.href='login.html'">Login</button>
+<button onclick="location.href='register.html'">Register</button>
+</div>
 
-<section class="hero">
-
-<h2>Arabic Exams Platform</h2>
-
-<p>Preparatory and Secondary Arabic Exams</p>
-
-<a class="btn" href="login.html">Start Now</a>
+<div class="card" id="adminCard" style="display:none;">
+<h2>Admin Panel</h2>
+<button onclick="location.href='admin_panel.html'">Go to Admin Panel</button>
+</div>
 
 </section>
 
 <footer>
-
 <p>© Shaimaa El-Desouky Platform</p>
-
 </footer>
+
+<script>
+// Check if logged in
+let currentStudent = JSON.parse(localStorage.getItem('currentStudent'));
+const admin = { username: "sd" };
+
+// Show admin card if admin logged in
+if(currentStudent && currentStudent.number === admin.username){
+    document.getElementById('adminCard').style.display = 'block';
+}
+</script>
 
 </body>
 </html>
