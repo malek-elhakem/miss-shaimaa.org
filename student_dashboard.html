@@ -13,36 +13,48 @@
 <section class="container">
 
 <div class="card">
-<h2>Welcome, <span id="studentName"></span>!</h2>
-<p>Your exams and grades are here:</p>
+<h2>Your Exams & Grades</h2>
 <ul id="examList"></ul>
 <button onclick="generatePDF()">Download Grades PDF</button>
+</div>
+
+<div class="card">
+<h2>All Available Files</h2>
+<ul id="allFilesList"></ul>
 </div>
 
 </section>
 
 <footer>
 <p>© Shaimaa El-Desouky Platform</p>
-<p>Teacher Number: 01012345678</p>
 </footer>
 
 <script>
-// Load students from LocalStorage
+let currentStudent = JSON.parse(localStorage.getItem('currentStudent'));
 let allStudents = JSON.parse(localStorage.getItem('studentsData')) || [];
-let currentStudentNumber = prompt("Enter your student number:"); // مؤقت
-let currentStudent = allStudents.find(s => s.number === currentStudentNumber);
 
-// Display student name
-document.getElementById('studentName').innerText = currentStudent?.name ?? "Student";
-
-// Display exams
+// Display exams for this student
 let examList = document.getElementById('examList');
 for(let exam in currentStudent.exams){
-  let score = currentStudent.exams[exam].score ?? "Not Taken";
+  let score = currentStudent.exams[exam]?.score ?? "Not Taken";
   let li = document.createElement('li');
   li.textContent = `${exam}: ${score}`;
   examList.appendChild(li);
 }
+
+// Display all files (dummy example)
+let allFilesList = document.getElementById('allFilesList');
+let files = [
+  "Arabic_1Preparatory_2025.pdf",
+  "Math_2Preparatory_2025.pdf",
+  "English_3Preparatory_2025.pdf",
+  "Physics_1Secondary_2025.pdf"
+];
+files.forEach(f=>{
+  let li = document.createElement('li');
+  li.innerHTML = `<a href="files/${f}" target="_blank">${f}</a>`;
+  allFilesList.appendChild(li);
+});
 
 // PDF Generator
 function generatePDF(){
@@ -52,7 +64,7 @@ function generatePDF(){
   doc.text(`Grades for ${currentStudent.name}`, 20, 20);
   let y = 30;
   for(let exam in currentStudent.exams){
-    let score = currentStudent.exams[exam].score ?? "Not Taken";
+    let score = currentStudent.exams[exam]?.score ?? "Not Taken";
     doc.text(`${exam}: ${score}`, 20, y);
     y += 10;
   }
