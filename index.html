@@ -6,27 +6,26 @@
 <link rel="stylesheet" href="style.css">
 <style>
 body { font-family: Arial; background:#1e1e1e; color:white; margin:0; }
-.container { width: 90%; max-width:600px; margin: 20px auto; }
-.card { background:#2c2c2c; padding:20px; margin-bottom:15px; border-radius:10px; }
-button { padding:10px 20px; margin:5px; cursor:pointer; }
+header { text-align:center; padding:20px; background: linear-gradient(90deg, #4b6cb7, #182848); }
+header h1 { margin:0; color:#fff; }
+.container { width: 90%; max-width:400px; margin: 40px auto; }
+.card { background:#2c2c2c; padding:20px; margin-bottom:20px; border-radius:10px; text-align:center; }
+button { padding:12px 25px; margin:10px; cursor:pointer; border:none; border-radius:5px; background:#4b6cb7; color:white; font-size:16px; }
+button:hover { background:#182848; }
+#adminCard button { background:#ff6b6b; }
+#adminCard button:hover { background:#c0392b; }
+.banner { width:100%; height:150px; background: url('banner.jpg') center/cover no-repeat; border-radius:10px; margin-bottom:20px; }
 </style>
 </head>
 <body>
 
-<header><h1>Shaimaa Platform</h1></header>
+<header>
+<h1>Shaimaa Platform</h1>
+</header>
 
 <section class="container">
 
-<div class="card">
-<h2>Tasks / Files</h2>
-<ul id="tasksList">
-  <li>Exam 1 – 1 Preparatory – 2025</li>
-  <li>Exam 2 – 2 Preparatory – 2025</li>
-  <li>Exam 3 – 3 Preparatory – 2025</li>
-  <li>Exam 4 – 1 Secondary – 2025</li>
-  <!-- كل الملفات الأخرى تظهر هنا بشكل طولي -->
-</ul>
-</div>
+<div class="banner"></div>
 
 <div class="card">
 <h2>User Actions</h2>
@@ -41,7 +40,7 @@ button { padding:10px 20px; margin:5px; cursor:pointer; }
 
 </section>
 
-<footer>
+<footer style="text-align:center; padding:10px; color:#aaa;">
 <p>© Shaimaa El-Desouky Platform</p>
 </footer>
 
