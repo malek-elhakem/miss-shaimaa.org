@@ -1,37 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
 <title>Student Dashboard</title>
 <link rel="stylesheet" href="style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
-
 <body>
 
-<header>
-<h1>Student Dashboard</h1>
-</header>
+<header><h1>Student Dashboard</h1></header>
 
 <section class="container">
 
 <div class="card">
-<h2>Welcome, Student!</h2>
+<h2>Welcome, <span id="studentName"></span>!</h2>
 <p>Your exams and grades are here:</p>
-
-<ul>
-<li><a href="governorates.html">Governorate Exams</a></li>
-<li><a href="exams.html">Mandatory Exam</a></li>
-<li><a href="exams.html">Subject Exams</a></li>
-</ul>
-
+<ul id="examList"></ul>
+<button onclick="generatePDF()">Download Grades PDF</button>
 </div>
 
 </section>
 
 <footer>
 <p>© Shaimaa El-Desouky Platform</p>
+<p>Teacher Number: 01012345678</p>
 </footer>
+
+<script>
+// Load students from LocalStorage
+let allStudents = JSON.parse(localStorage.getItem('studentsData')) || [];
+let currentStudentNumber = prompt("Enter your student number:"); // مؤقت
+let currentStudent = allStudents.find(s => s.number === currentStudentNumber);
+
+// Display student name
+document.getElementById('studentName').innerText = currentStudent?.name ?? "Student";
+
+// Display exams
+let examList = document.getElementById('examList');
+for(let exam in currentStudent.exams){
+  let score = currentStudent.exams[exam].score ?? "Not Taken";
+  let li = document.createElement('li');
+  li.textContent = `${exam}: ${score}`;
+  examList.appendChild(li);
+}
+
+// PDF Generator
+function generatePDF(){
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  doc.setFontSize(16);
+  doc.text(`Grades for ${currentStudent.name}`, 20, 20);
+  let y = 30;
+  for(let exam in currentStudent.exams){
+    let score = currentStudent.exams[exam].score ?? "Not Taken";
+    doc.text(`${exam}: ${score}`, 20, y);
+    y += 10;
+  }
+  doc.save(`${currentStudent.number}_grades.pdf`);
+}
+</script>
 
 </body>
 </html>
