@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title>Admin Panel</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+<h1>Admin Panel</h1>
+</header>
+
+<section class="container">
+
+<div class="card">
+
+<h2>Upload Exams</h2>
+
+<form id="examForm">
+
+<label>Governorate</label>
+<select required>
+<option value="">Select Governorate</option>
+<option>القاهرة</option>
+<option>الجيزة</option>
+<option>الإسكندرية</option>
+<option>الدقهلية</option>
+<option>البحر الأحمر</option>
+<option>البحيرة</option>
+<option>الفيوم</option>
+<option>الغربية</option>
+<option>الإسماعيلية</option>
+<option>المنوفية</option>
+<option>المنيا</option>
+<option>القليوبية</option>
+<option>الوادي الجديد</option>
+<option>السويس</option>
+<option>أسوان</option>
+<option>أسيوط</option>
+<option>بني سويف</option>
+<option>بورسعيد</option>
+<option>دمياط</option>
+<option>الشرقية</option>
+<option>جنوب سيناء</option>
+<option>كفر الشيخ</option>
+<option>مطروح</option>
+<option>الأقصر</option>
+<option>قنا</option>
+<option>شمال سيناء</option>
+<option>سوهاج</option>
+</select>
+<br>
+
+<label>Grade</label>
+<select required>
+<option value="">Select Grade</option>
+<option>Prep 1</option>
+<option>Prep 2</option>
+<option>Prep 3</option>
+<option>Sec 1</option>
+<option>Sec 2</option>
+<option>Sec 3</option>
+</select>
+<br>
+
+<label>Upload Exam (PDF)</label>
+<input type="file" accept=".pdf" required>
+<br>
+
+<button type="submit">Upload Exam</button>
+
+</form>
+
+</div>
+
+</section>
+
+<footer>
+<p>© Shaimaa El-Desouky Platform</p>
+</footer>
+
+<script>
+document.getElementById('examForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    alert("Exam uploaded successfully!");
+    // هنا ممكن تضيف كود رفع الملفات على السيرفر
+});
+</script>
+
+</body>
+</html>
