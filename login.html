@@ -1,40 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
 <title>Login</title>
 <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<header>
-<h1>Login</h1>
-</header>
+<header><h1>Login</h1></header>
 
 <section class="container">
-
 <div class="card">
-
 <h2>Enter Your Credentials</h2>
-
 <form id="loginForm">
-
-<input type="text" id="username" placeholder="Username or Student Number" required>
-<br>
-
-<input type="password" id="password" placeholder="Password" required>
-<br>
-
+<input type="text" id="username" placeholder="Username or Student Number" required><br>
+<input type="password" id="password" placeholder="Password" required><br>
 <button type="submit">Login</button>
-
 <p id="error" style="color:red;"></p>
-
 </form>
-
 </div>
-
 </section>
 
 <footer>
@@ -42,17 +26,20 @@
 </footer>
 
 <script>
-// Dummy Student Accounts (example)
+// Dummy Student Accounts
 const students = [
-    { number: "1001", password: "pass1" },
-    { number: "1002", password: "pass2" },
-    { number: "1003", password: "pass3" }
+    { number: "1001", name:"Ali Ahmed", password: "pass1", grade: "1 Preparatory", exams: {} },
+    { number: "1002", name:"Sara Mohamed", password: "pass2", grade: "2 Preparatory", exams: {} }
 ];
 
 const admin = { username: "sd", password: "1234" };
 
-const form = document.getElementById('loginForm');
+// Save initial data to localStorage if empty
+if(!localStorage.getItem('studentsData')){
+    localStorage.setItem('studentsData', JSON.stringify(students));
+}
 
+const form = document.getElementById('loginForm');
 form.addEventListener('submit', function(e){
     e.preventDefault();
     const user = document.getElementById('username').value;
@@ -60,16 +47,16 @@ form.addEventListener('submit', function(e){
 
     // Check Admin
     if(user === admin.username && pass === admin.password){
-        alert("Welcome Admin!");
-        window.location.href = "admin_panel.html"; // واجهة الأدمن
+        window.location.href = "admin_panel.html";
         return;
     }
 
     // Check Students
-    const found = students.find(s => s.number === user && s.password === pass);
+    const allStudents = JSON.parse(localStorage.getItem('studentsData'));
+    const found = allStudents.find(s => s.number === user && s.password === pass);
     if(found){
-        alert("Welcome Student!");
-        window.location.href = "student_dashboard.html"; // واجهة الطالب
+        localStorage.setItem('currentStudent', JSON.stringify(found));
+        window.location.href = "student_dashboard.html";
         return;
     }
 
