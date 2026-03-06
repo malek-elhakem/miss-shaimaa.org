@@ -1,52 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
 <title>Exams</title>
 <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<header>
-<h1>Exams</h1>
-</header>
+<header><h1>Exams</h1></header>
 
 <section class="container">
 
 <div class="card">
 <h2>Mandatory Exam</h2>
-<p>Status: <strong>Not Taken</strong></p>
-<button>Start Exam</button>
+<p>Status: <span id="mandatoryStatus">Not Taken</span></p>
+<button onclick="startExam('Mandatory')">Start Exam</button>
 </div>
 
 <div class="card">
 <h2>Subject Exams</h2>
-<ul>
-<li>Arabic - Prep 1 <button>Start</button></li>
-<li>Arabic - Prep 2 <button>Start</button></li>
-<li>Arabic - Prep 3 <button>Start</button></li>
-<li>Arabic - Sec 1 <button>Start</button></li>
-<li>Arabic - Sec 2 <button>Start</button></li>
-<li>Arabic - Sec 3 <button>Start</button></li>
-</ul>
-</div>
-
-<div class="card">
-<h2>Grades & Appeals</h2>
-<ul>
-<li>Arabic - Prep 1: 80/100 <a href="appeal.html">Appeal</a></li>
-<li>Arabic - Prep 2: 70/100 <a href="appeal.html">Appeal</a></li>
-<li>Arabic - Prep 3: 90/100 <a href="appeal.html">Appeal</a></li>
-</ul>
+<ul id="subjectExams"></ul>
 </div>
 
 </section>
 
 <footer>
 <p>© Shaimaa El-Desouky Platform</p>
+<p>Teacher Number: 01012345678</p>
 </footer>
+
+<script>
+// Load students
+let allStudents = JSON.parse(localStorage.getItem('studentsData')) || [];
+let currentStudentNumber = prompt("Enter your student number:");
+let currentStudent = allStudents.find(s => s.number === currentStudentNumber);
+
+// Subject exams list
+let exams = ['Arabic-Prep1','Arabic-Prep2','Arabic-Prep3','Arabic-Sec1','Arabic-Sec2','Arabic-Sec3'];
+let subjectExams = document.getElementById('subjectExams');
+
+exams.forEach(exam => {
+  let li = document.createElement('li');
+  let score = currentStudent.exams[exam]?.score ?? "Not Taken";
+  li.innerHTML = `${exam}: ${score} <button onclick="startExam('${exam}')">Start</button>`;
+  subjectExams.appendChild(li);
+});
+
+// Start exam function (dummy questions)
+function startExam(examName){
+  let userAnswer = prompt(`Answer for ${examName} (type your score 0-100)`,'80');
+  let score = parseInt(userAnswer);
+  currentStudent.exams[examName].score = score;
+  localStorage.setItem('studentsData', JSON.stringify(allStudents));
+  alert(`Your score for ${examName}: ${score}`);
+  location.reload(); // تحديث الصفحة
+}
+</script>
 
 </body>
 </html>
