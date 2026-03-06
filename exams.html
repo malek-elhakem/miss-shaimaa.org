@@ -26,34 +26,33 @@
 
 <footer>
 <p>© Shaimaa El-Desouky Platform</p>
-<p>Teacher Number: 01012345678</p>
 </footer>
 
 <script>
 // Load students
 let allStudents = JSON.parse(localStorage.getItem('studentsData')) || [];
-let currentStudentNumber = prompt("Enter your student number:");
-let currentStudent = allStudents.find(s => s.number === currentStudentNumber);
+let currentStudent = JSON.parse(localStorage.getItem('currentStudent'));
 
 // Subject exams list
-let exams = ['Arabic-Prep1','Arabic-Prep2','Arabic-Prep3','Arabic-Sec1','Arabic-Sec2','Arabic-Sec3'];
+let exams = ['Arabic-Prep1','Arabic-Prep2','Arabic-Prep3','Arabic-Sec1','Arabic-Sec2','Arabic-Sec3','1Secondary-Arabic'];
 let subjectExams = document.getElementById('subjectExams');
 
 exams.forEach(exam => {
+  if(!currentStudent.exams[exam]) currentStudent.exams[exam] = {};
   let li = document.createElement('li');
   let score = currentStudent.exams[exam]?.score ?? "Not Taken";
   li.innerHTML = `${exam}: ${score} <button onclick="startExam('${exam}')">Start</button>`;
   subjectExams.appendChild(li);
 });
 
-// Start exam function (dummy questions)
+// Start exam function (dummy)
 function startExam(examName){
-  let userAnswer = prompt(`Answer for ${examName} (type your score 0-100)`,'80');
+  let userAnswer = prompt(`Answer for ${examName} (type score 0-100)`,'80');
   let score = parseInt(userAnswer);
   currentStudent.exams[examName].score = score;
   localStorage.setItem('studentsData', JSON.stringify(allStudents));
   alert(`Your score for ${examName}: ${score}`);
-  location.reload(); // تحديث الصفحة
+  location.reload();
 }
 </script>
 
