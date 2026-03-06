@@ -3,31 +3,33 @@
 
 <head>
 <meta charset="UTF-8">
-<title>Student Login</title>
+<title>Login</title>
 <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <header>
-<h1>Student Login</h1>
+<h1>Login</h1>
 </header>
 
 <section class="container">
 
 <div class="card">
 
-<h2>Login to Your Account</h2>
+<h2>Enter Your Credentials</h2>
 
-<form>
+<form id="loginForm">
 
-<input type="text" placeholder="Student Number" required>
+<input type="text" id="username" placeholder="Username or Student Number" required>
 <br>
 
-<input type="password" placeholder="Password" required>
+<input type="password" id="password" placeholder="Password" required>
 <br>
 
 <button type="submit">Login</button>
+
+<p id="error" style="color:red;"></p>
 
 </form>
 
@@ -38,6 +40,42 @@
 <footer>
 <p>© Shaimaa El-Desouky Platform</p>
 </footer>
+
+<script>
+// Dummy Student Accounts (example)
+const students = [
+    { number: "1001", password: "pass1" },
+    { number: "1002", password: "pass2" },
+    { number: "1003", password: "pass3" }
+];
+
+const admin = { username: "sd", password: "1234" };
+
+const form = document.getElementById('loginForm');
+
+form.addEventListener('submit', function(e){
+    e.preventDefault();
+    const user = document.getElementById('username').value;
+    const pass = document.getElementById('password').value;
+
+    // Check Admin
+    if(user === admin.username && pass === admin.password){
+        alert("Welcome Admin!");
+        window.location.href = "admin_panel.html"; // واجهة الأدمن
+        return;
+    }
+
+    // Check Students
+    const found = students.find(s => s.number === user && s.password === pass);
+    if(found){
+        alert("Welcome Student!");
+        window.location.href = "student_dashboard.html"; // واجهة الطالب
+        return;
+    }
+
+    document.getElementById('error').innerText = "Wrong Username or Password!";
+});
+</script>
 
 </body>
 </html>
